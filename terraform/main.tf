@@ -61,8 +61,8 @@ resource "aws_security_group" "http" {
 
   ingress {
     description = "HTTP"
-    from_port   = 3000
-    to_port     = 3000
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -98,6 +98,10 @@ resource "aws_security_group" "ssh" {
 
 }
 
+variable "PORT" {
+  default = 80
+}
+
 resource "aws_instance" "photos-instance" {
   count         = 1
   ami           = "ami-070af08af12a8dce6"
@@ -115,8 +119,10 @@ resource "aws_instance" "photos-instance" {
                 git clone https://github.com/Markussim/photos.git
                 cd photos/server
                 npm install
+                export PORT=${var.PORT}
                 npm start
                 EOF
+
 
 
   tags = {

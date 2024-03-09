@@ -8,7 +8,7 @@ const {
 } = require("@aws-sdk/client-s3");
 const sharp = require("sharp");
 const app = express();
-const port = 3000;
+const port = 3000 || process.env.PORT;
 
 const s3 = new S3Client({ region: "eu-north-1" });
 
